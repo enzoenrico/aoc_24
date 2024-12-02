@@ -1,14 +1,15 @@
-package part2
+package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
 )
 
 func readFile() ([]int, []int) {
-	file, _ := os.Open("./example2.txt")
+	file, _ := os.Open("./input2.txt")
 	defer file.Close()
 
 	var col1, col2 []int
@@ -30,7 +31,7 @@ func readFile() ([]int, []int) {
 	return col1, col2
 }
 
-// run with the 2 column
+// run with the 2nd column
 func classify(arr []int) map[int]int {
 	frequency := make(map[int]int)
 	for _, val := range arr {
@@ -47,9 +48,17 @@ func main() {
 	l_col, r_col := readFile()
 	freq := classify(r_col)
 
-	total_sum := 0
+	fmt.Println(freq)
 
-	for _, val := range l_col {
-		multiplier := 0
+	sum := 0
+
+	for _, v := range l_col {
+		mult, ok := freq[v]
+		if !ok {
+			mult = 0
+		}
+		res := v * mult
+		sum += res
 	}
+	fmt.Println(sum)
 }
